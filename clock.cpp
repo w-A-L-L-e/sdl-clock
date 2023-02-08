@@ -32,15 +32,40 @@ void get_time(int &h, int &m, int &s) {
 }
 
 void draw_clock_markers(Screen *scr) {
-  int marker_start = 160;
+  int marker_start = 155;
   int marker_end = 170;
 
+  // hour ticks
   for (int hour = 1; hour <= 12; hour++) {
-    double hour_angle = (double)hour * M_PI / 6.0; // 12 hours = 2PI
+    double hour_angle = (double)hour * M_PI / 6.0; // 12 hours => 2*PI
     scr->line(scr->center_x + marker_start * std::cos(hour_angle - M_PI / 2.0),
               scr->center_y + marker_start * std::sin(hour_angle - M_PI / 2.0),
               scr->center_x + marker_end * std::cos(hour_angle - M_PI / 2.0),
               scr->center_y + marker_end * std::sin(hour_angle - M_PI / 2.0));
+
+    // double thickness
+    scr->line(scr->center_x+1 + marker_start * std::cos(hour_angle - M_PI / 2.0),
+              scr->center_y + marker_start * std::sin(hour_angle - M_PI / 2.0),
+              scr->center_x+1 + marker_end * std::cos(hour_angle - M_PI / 2.0),
+              scr->center_y + marker_end * std::sin(hour_angle - M_PI / 2.0));
+ 
+    scr->line(scr->center_x + marker_start * std::cos(hour_angle - M_PI / 2.0),
+              scr->center_y+1 + marker_start * std::sin(hour_angle - M_PI / 2.0),
+              scr->center_x + marker_end * std::cos(hour_angle - M_PI / 2.0),
+              scr->center_y+1 + marker_end * std::sin(hour_angle - M_PI / 2.0));
+ 
+  }
+
+  marker_start = 165;
+  marker_end = 170;
+  // minute ticks
+  for (int min = 0; min < 60; min++) {
+    double min_angle = (double)min * M_PI / 30.0; // 60 min => 2*PI
+    if(min == 15) continue;
+    scr->line(scr->center_x + marker_start * std::cos(min_angle - M_PI / 2.0),
+              scr->center_y + marker_start * std::sin(min_angle - M_PI / 2.0),
+              scr->center_x + marker_end * std::cos(min_angle - M_PI / 2.0),
+              scr->center_y + marker_end * std::sin(min_angle - M_PI / 2.0));
   }
 }
 
